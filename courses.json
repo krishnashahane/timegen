@@ -1,0 +1,213 @@
+{
+  "courses": [
+    {
+      "id": "CS301",
+      "name": "Data Structures and Algorithms",
+      "department": "Computer Science",
+      "credits": 4,
+      "type": "Major",
+      "hours_per_week": 4,
+      "prerequisites": ["CS201", "CS202"],
+      "requires_lab": true,
+      "preferred_rooms": ["LH-101", "LH-102", "Lab-201"]
+    },
+    {
+      "id": "CS302",
+      "name": "Database Management Systems",
+      "department": "Computer Science",
+      "credits": 4,
+      "type": "Major",
+      "hours_per_week": 4,
+      "prerequisites": ["CS201"],
+      "requires_lab": true,
+      "preferred_rooms": ["LH-103", "Lab-201", "Lab-202"]
+    },
+    {
+      "id": "CS303",
+      "name": "Computer Networks",
+      "department": "Computer Science",
+      "credits": 4,
+      "type": "Major",
+      "hours_per_week": 4,
+      "prerequisites": ["CS201"],
+      "requires_lab": true,
+      "preferred_rooms": ["LH-104", "Lab-203"]
+    },
+    {
+      "id": "CS304",
+      "name": "Operating Systems",
+      "department": "Computer Science",
+      "credits": 4,
+      "type": "Major",
+      "hours_per_week": 4,
+      "prerequisites": ["CS201", "CS202"],
+      "requires_lab": true,
+      "preferred_rooms": ["LH-104", "Lab-202"]
+    },
+    {
+      "id": "CS401",
+      "name": "Artificial Intelligence",
+      "department": "Computer Science",
+      "credits": 4,
+      "type": "Major",
+      "hours_per_week": 4,
+      "prerequisites": ["CS301"],
+      "requires_lab": true,
+      "preferred_rooms": ["LH-101", "Lab-201"]
+    },
+    {
+      "id": "IT301",
+      "name": "Web Technologies",
+      "department": "Information Technology",
+      "credits": 4,
+      "type": "Major",
+      "hours_per_week": 4,
+      "prerequisites": ["CS201"],
+      "requires_lab": true,
+      "preferred_rooms": ["LH-105", "Lab-203"]
+    },
+    {
+      "id": "IT302",
+      "name": "Software Engineering",
+      "department": "Information Technology",
+      "credits": 4,
+      "type": "Major",
+      "hours_per_week": 4,
+      "prerequisites": ["CS201"],
+      "requires_lab": false,
+      "preferred_rooms": ["LH-106"]
+    },
+    {
+      "id": "EC301",
+      "name": "Digital Electronics",
+      "department": "Electronics and Communication",
+      "credits": 4,
+      "type": "Major",
+      "hours_per_week": 4,
+      "prerequisites": ["EC201"],
+      "requires_lab": true,
+      "preferred_rooms": ["LH-107", "Lab-205"]
+    },
+    {
+      "id": "EC302",
+      "name": "Signals and Systems",
+      "department": "Electronics and Communication",
+      "credits": 4,
+      "type": "Major",
+      "hours_per_week": 4,
+      "prerequisites": ["EC201", "MA201"],
+      "requires_lab": false,
+      "preferred_rooms": ["LH-107"]
+    },
+    {
+      "id": "EC303",
+      "name": "Communication Systems",
+      "department": "Electronics and Communication",
+      "credits": 4,
+      "type": "Major",
+      "hours_per_week": 4,
+      "prerequisites": ["EC201"],
+      "requires_lab": true,
+      "preferred_rooms": ["LH-108", "Lab-206"]
+    },
+    {
+      "id": "ME301",
+      "name": "Thermodynamics",
+      "department": "Mechanical Engineering",
+      "credits": 4,
+      "type": "Major",
+      "hours_per_week": 4,
+      "prerequisites": ["ME201", "PH201"],
+      "requires_lab": false,
+      "preferred_rooms": ["LH-109"]
+    },
+    {
+      "id": "ME302",
+      "name": "Fluid Mechanics",
+      "department": "Mechanical Engineering",
+      "credits": 4,
+      "type": "Major",
+      "hours_per_week": 4,
+      "prerequisites": ["ME201", "MA201"],
+      "requires_lab": true,
+      "preferred_rooms": ["LH-109", "Lab-207"]
+    },
+    {
+      "id": "ME303",
+      "name": "Machine Design",
+      "department": "Mechanical Engineering",
+      "credits": 4,
+      "type": "Major",
+      "hours_per_week": 4,
+      "prerequisites": ["ME202"],
+      "requires_lab": true,
+      "preferred_rooms": ["LH-110", "Lab-208"]
+    },
+    {
+      "id": "MINOR201",
+      "name": "Introduction to Data Science",
+      "department": "Computer Science",
+      "credits": 3,
+      "type": "Minor",
+      "hours_per_week": 3,
+      "prerequisites": [],
+      "requires_lab": false,
+      "preferred_rooms": ["LH-104"]
+    },
+    {
+      "id": "MINOR202",
+      "name": "Introduction to Machine Learning",
+      "department": "Information Technology",
+      "credits": 3,
+      "type": "Minor",
+      "hours_per_week": 3,
+      "prerequisites": [],
+      "requires_lab": false,
+      "preferred_rooms": ["LH-106"]
+    },
+    {
+      "id": "MINOR203",
+      "name": "Introduction to IoT",
+      "department": "Electronics and Communication",
+      "credits": 3,
+      "type": "Minor",
+      "hours_per_week": 3,
+      "prerequisites": [],
+      "requires_lab": false,
+      "preferred_rooms": ["LH-110"]
+    },
+    {
+      "id": "SKILL101",
+      "name": "Python Programming",
+      "department": "Computer Science",
+      "credits": 2,
+      "type": "Skill",
+      "hours_per_week": 2,
+      "prerequisites": [],
+      "requires_lab": true,
+      "preferred_rooms": ["Lab-201", "Lab-202"]
+    },
+    {
+      "id": "SKILL102",
+      "name": "Web Development",
+      "department": "Information Technology",
+      "credits": 2,
+      "type": "Skill",
+      "hours_per_week": 2,
+      "prerequisites": [],
+      "requires_lab": true,
+      "preferred_rooms": ["Lab-203", "Lab-204"]
+    },
+    {
+      "id": "SKILL103",
+      "name": "Embedded Systems",
+      "department": "Electronics and Communication",
+      "credits": 2,
+      "type": "Skill",
+      "hours_per_week": 2,
+      "prerequisites": [],
+      "requires_lab": true,
+      "preferred_rooms": ["Lab-205", "Lab-206"]
+    }
+  ]
+}
