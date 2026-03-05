@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Page - AI Timetable Generator</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    button { padding: 10px 20px; margin: 10px; cursor: pointer; }
+    .test-button { background: #4361ee; color: white; border: none; border-radius: 5px; }
+  </style>
+</head>
+<body>
+  <h1>Test Page</h1>
+  <p>This is a simple test to verify JavaScript works:</p>
+  
+  <button class="test-button" onclick="testClick()">Test Button (Inline)</button>
+  <button class="test-button" id="testBtn">Test Button (Event Listener)</button>
+  
+  <div id="output"></div>
+  
+  <hr>
+  <p><a href="index.html">Go to Main Application</a></p>
+  
+  <script>
+    function testClick() {
+      document.getElementById('output').innerHTML += '<p>Inline button works!</p>';
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      const testBtn = document.getElementById('testBtn');
+      if (testBtn) {
+        testBtn.addEventListener('click', function() {
+          document.getElementById('output').innerHTML += '<p>Event listener button works!</p>';
+        });
+        console.log('Test button event listener added');
+      } else {
+        console.error('Test button not found');
+      }
+    });
+  </script>
+</body>
+</html>
