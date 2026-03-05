@@ -1,0 +1,198 @@
+{
+  "faculty": [
+    {
+      "id": "FAC001",
+      "name": "Dr. Rajesh Sharma",
+      "department": "Computer Science",
+      "designation": "Professor",
+      "courses": ["CS301", "CS401"],
+      "preferences": {
+        "preferred_days": ["Monday", "Tuesday", "Wednesday"],
+        "preferred_time_slots": ["08:00 - 09:00", "09:00 - 10:00", "10:00 - 11:00"],
+        "avoid_consecutive_classes": false,
+        "max_classes_per_day": 3,
+        "preferred_rooms": ["LH-101", "LH-102"]
+      },
+      "unavailability": [
+        {
+          "day": "Thursday",
+          "time": "08:00 - 11:00",
+          "reason": "Department Meeting"
+        },
+        {
+          "day": "Friday",
+          "time": "02:00 - 05:00",
+          "reason": "Research Work"
+        }
+      ]
+    },
+    {
+      "id": "FAC002",
+      "name": "Prof. Meena Gupta",
+      "department": "Computer Science",
+      "designation": "Associate Professor",
+      "courses": ["CS302", "SKILL101"],
+      "preferences": {
+        "preferred_days": ["Monday", "Wednesday", "Friday"],
+        "preferred_time_slots": ["11:00 - 12:00", "12:00 - 01:00", "02:00 - 03:00"],
+        "avoid_consecutive_classes": true,
+        "max_classes_per_day": 2,
+        "preferred_rooms": ["LH-103", "Lab-201"]
+      },
+      "unavailability": [
+        {
+          "day": "Tuesday",
+          "time": "09:00 - 12:00",
+          "reason": "Academic Council Meeting"
+        }
+      ]
+    },
+    {
+      "id": "FAC003",
+      "name": "Dr. Amit Kumar",
+      "department": "Computer Science",
+      "designation": "Assistant Professor",
+      "courses": ["CS303", "CS304", "MINOR201"],
+      "preferences": {
+        "preferred_days": ["Tuesday", "Thursday", "Friday"],
+        "preferred_time_slots": ["09:00 - 10:00", "10:00 - 11:00", "03:00 - 04:00", "04:00 - 05:00"],
+        "avoid_consecutive_classes": false,
+        "max_classes_per_day": 4,
+        "preferred_rooms": ["LH-104", "Lab-202"]
+      },
+      "unavailability": [
+        {
+          "day": "Monday",
+          "time": "02:00 - 05:00",
+          "reason": "Research Project"
+        }
+      ]
+    },
+    {
+      "id": "FAC004",
+      "name": "Prof. Sanjay Singh",
+      "department": "Information Technology",
+      "designation": "Professor",
+      "courses": ["IT301", "SKILL102"],
+      "preferences": {
+        "preferred_days": ["Monday", "Tuesday", "Wednesday"],
+        "preferred_time_slots": ["08:00 - 09:00", "09:00 - 10:00", "02:00 - 03:00"],
+        "avoid_consecutive_classes": true,
+        "max_classes_per_day": 3,
+        "preferred_rooms": ["LH-105", "Lab-203"]
+      },
+      "unavailability": [
+        {
+          "day": "Friday",
+          "time": "09:00 - 12:00",
+          "reason": "Administrative Work"
+        }
+      ]
+    },
+    {
+      "id": "FAC005",
+      "name": "Dr. Priya Verma",
+      "department": "Information Technology",
+      "designation": "Associate Professor",
+      "courses": ["IT302", "MINOR202"],
+      "preferences": {
+        "preferred_days": ["Wednesday", "Thursday", "Friday"],
+        "preferred_time_slots": ["10:00 - 11:00", "11:00 - 12:00", "03:00 - 04:00"],
+        "avoid_consecutive_classes": false,
+        "max_classes_per_day": 3,
+        "preferred_rooms": ["LH-106", "Lab-204"]
+      },
+      "unavailability": [
+        {
+          "day": "Monday",
+          "time": "09:00 - 12:00",
+          "reason": "Research Work"
+        }
+      ]
+    },
+    {
+      "id": "FAC006",
+      "name": "Prof. Ravi Joshi",
+      "department": "Electronics and Communication",
+      "designation": "Professor",
+      "courses": ["EC301", "EC302"],
+      "preferences": {
+        "preferred_days": ["Monday", "Tuesday", "Thursday"],
+        "preferred_time_slots": ["08:00 - 09:00", "09:00 - 10:00", "10:00 - 11:00"],
+        "avoid_consecutive_classes": false,
+        "max_classes_per_day": 3,
+        "preferred_rooms": ["LH-107", "Lab-205"]
+      },
+      "unavailability": [
+        {
+          "day": "Wednesday",
+          "time": "09:00 - 12:00",
+          "reason": "Department Meeting"
+        }
+      ]
+    },
+    {
+      "id": "FAC007",
+      "name": "Dr. Anita Patel",
+      "department": "Electronics and Communication",
+      "designation": "Assistant Professor",
+      "courses": ["EC303", "SKILL103"],
+      "preferences": {
+        "preferred_days": ["Tuesday", "Wednesday", "Friday"],
+        "preferred_time_slots": ["11:00 - 12:00", "12:00 - 01:00", "02:00 - 03:00"],
+        "avoid_consecutive_classes": true,
+        "max_classes_per_day": 2,
+        "preferred_rooms": ["LH-108", "Lab-206"]
+      },
+      "unavailability": [
+        {
+          "day": "Thursday",
+          "time": "02:00 - 05:00",
+          "reason": "Research Project"
+        }
+      ]
+    },
+    {
+      "id": "FAC008",
+      "name": "Prof. Vikram Reddy",
+      "department": "Mechanical Engineering",
+      "designation": "Professor",
+      "courses": ["ME301", "ME302"],
+      "preferences": {
+        "preferred_days": ["Monday", "Wednesday", "Friday"],
+        "preferred_time_slots": ["09:00 - 10:00", "10:00 - 11:00", "11:00 - 12:00"],
+        "avoid_consecutive_classes": false,
+        "max_classes_per_day": 3,
+        "preferred_rooms": ["LH-109", "Lab-207"]
+      },
+      "unavailability": [
+        {
+          "day": "Tuesday",
+          "time": "09:00 - 12:00",
+          "reason": "Administrative Work"
+        }
+      ]
+    },
+    {
+      "id": "FAC009",
+      "name": "Dr. Suresh Iyer",
+      "department": "Mechanical Engineering",
+      "designation": "Associate Professor",
+      "courses": ["ME303", "MINOR203"],
+      "preferences": {
+        "preferred_days": ["Tuesday", "Thursday", "Friday"],
+        "preferred_time_slots": ["02:00 - 03:00", "03:00 - 04:00", "04:00 - 05:00"],
+        "avoid_consecutive_classes": true,
+        "max_classes_per_day": 2,
+        "preferred_rooms": ["LH-110", "Lab-208"]
+      },
+      "unavailability": [
+        {
+          "day": "Monday",
+          "time": "09:00 - 12:00",
+          "reason": "Department Meeting"
+        }
+      ]
+    }
+  ]
+}
