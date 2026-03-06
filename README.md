@@ -82,7 +82,3 @@ Contains room information, capacity, and available facilities.
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
----
-
-Developed for Smart India Hackathon 2025
