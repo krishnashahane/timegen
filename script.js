@@ -15,6 +15,7 @@
     schedule: [],
     filtered: [],
     algorithmData: null,
+    visualization: null,
     step: 1,
     filterType: 'all',
     filterValue: '',
@@ -479,9 +480,10 @@
 
   function setupVisualization(data) {
     if (!window.AlgorithmVisualization) return;
-    const viz = new window.AlgorithmVisualization('algorithmVisualization');
-    viz.setData(data);
-    viz.start();
+    if (!state.visualization) state.visualization = new window.AlgorithmVisualization('algorithmVisualization');
+    state.visualization.stop();
+    state.visualization.setData(data);
+    state.visualization.start();
   }
 
   function generate() {
