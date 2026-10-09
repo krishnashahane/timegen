@@ -338,7 +338,8 @@
         seen.add(k);
       }
     }
-    const facultyConflicts = scheduled.length - new Set(scheduled.map((x) => x.facultyId + '|' + x.day + '|' + x.start)).size;
+    const facultySessions = scheduled.filter((x) => x.facultyId);
+    const facultyConflicts = facultySessions.length - new Set(facultySessions.map((x) => x.facultyId + '|' + x.day + '|' + x.start)).size;
     const roomConflicts = scheduled.length - new Set(scheduled.map((x) => x.roomId + '|' + x.day + '|' + x.start)).size;
 
     iterations.push({
@@ -489,8 +490,8 @@
 
   function updateMetrics(result) {
     const m = result.meta;
-    const hard = m.required ? m.placed / m.required : 1;
-    $('conflictFreeMetric').textContent = percent(hard);
+    const hardConflicts = m.studentConflicts + m.facultyConflicts + m.roomConflicts;
+    $('conflictFreeMetric').textContent = String(hardConflicts);
     $('facultyMetric').textContent = percent(m.facultyScore);
     $('roomMetric').textContent = percent(m.roomScore);
     $('scheduledMetric').textContent = m.placed + ' / ' + m.required;
