@@ -1,428 +1,169 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Timetable Generator | Smart India Hackathon 2025</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Local, browser-based academic timetable generator using constraint-aware scheduling.">
+  <title>TimeGen — Academic Timetable Generator</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
     <header>
-      <h1><i class="fas fa-calendar-alt"></i> AI Timetable Generator</h1>
-      <p>NEP 2020-ready, conflict-free, and optimized for modern academic needs</p>
+      <h1>TimeGen</h1>
+      <p>Generate a conflict-aware academic timetable directly in your browser using your students, faculty, courses, and room data.</p>
     </header>
-    
+
     <main>
-      <section class="landing" id="landingSection">
-        <h2>Welcome to the Future of Academic Scheduling</h2>
-        <p>Our AI-powered timetable generator creates optimal schedules that respect faculty preferences, student needs, and resource constraints. Experience conflict-free scheduling that adapts to your institution's unique requirements.</p>
-        <button id="startBtn" onclick="startGeneration()"><i class="fas fa-rocket"></i> Start Generating</button>
+      <section id="landingSection" class="card">
+        <h2>Generate a timetable</h2>
+        <p>Upload the four JSON datasets, choose the scheduling preferences, and generate a timetable locally. No data is uploaded to a server.</p>
+        <div class="step-navigation">
+          <button id="startBtn" class="btn">Start</button>
+        </div>
       </section>
-      
-      <section class="workflow" id="workflowSection" style="display:none;">
-        <!-- Step 1 -->
-        <div class="step" id="step1">
-          <div class="step-header">
-            <div class="step-number">1</div>
-            <h3>Upload Student Data</h3>
+
+      <section id="workflowSection" class="workflow hidden" aria-label="Timetable configuration">
+        <article class="step">
+          <div class="step-header"><div class="step-number">1</div><h3>Upload student data</h3></div>
+          <div class="form-group">
+            <label for="studentFile">Student choices (JSON)</label>
+            <input type="file" id="studentFile" accept=".json,application/json">
+            <div id="studentUploadStatus" class="upload-status"></div>
           </div>
-          <div class="step-content">
+          <div class="step-navigation"><button id="nextToStep2" class="btn">Next</button></div>
+        </article>
+
+        <article class="step hidden" id="step2">
+          <div class="step-header"><div class="step-number">2</div><h3>Upload faculty data</h3></div>
+          <div class="form-group">
+            <label for="facultyFile">Faculty assignments and availability (JSON)</label>
+            <input type="file" id="facultyFile" accept=".json,application/json">
+            <div id="facultyUploadStatus" class="upload-status"></div>
+          </div>
+          <div class="step-navigation">
+            <button id="backToStep1" class="btn secondary">Back</button>
+            <button id="nextToStep3" class="btn">Next</button>
+          </div>
+        </article>
+
+        <article class="step hidden" id="step3">
+          <div class="step-header"><div class="step-number">3</div><h3>Upload courses and rooms</h3></div>
+          <div class="form-grid">
             <div class="form-group">
-              <label for="studentFile"><i class="fas fa-users"></i> Student Choices (JSON):</label>
-              <input type="file" id="studentFile" accept=".json">
-              <div class="upload-status" id="studentUploadStatus"></div>
-            </div>
-            <button class="step-btn" id="nextToStep2">Next <i class="fas fa-arrow-right"></i></button>
-          </div>
-        </div>
-        
-        <!-- Step 2 -->
-        <div class="step" id="step2" style="opacity: 0.7;">
-          <div class="step-header">
-            <div class="step-number">2</div>
-            <h3>Upload Faculty Data</h3>
-          </div>
-          <div class="step-content">
-            <div class="form-group">
-              <label for="facultyFile"><i class="fas fa-chalkboard-teacher"></i> Faculty Details (JSON):</label>
-              <input type="file" id="facultyFile" accept=".json">
-              <div class="upload-status" id="facultyUploadStatus"></div>
-            </div>
-            <div class="step-navigation">
-              <button class="step-btn secondary" id="backToStep1"><i class="fas fa-arrow-left"></i> Back</button>
-              <button class="step-btn" id="nextToStep3">Next <i class="fas fa-arrow-right"></i></button>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Step 3 -->
-        <div class="step" id="step3" style="opacity: 0.7;">
-          <div class="step-header">
-            <div class="step-number">3</div>
-            <h3>Upload Course & Room Data</h3>
-          </div>
-          <div class="step-content">
-            <div class="form-group">
-              <label for="courseFile"><i class="fas fa-book"></i> Courses (JSON):</label>
-              <input type="file" id="courseFile" accept=".json">
-              <div class="upload-status" id="courseUploadStatus"></div>
+              <label for="courseFile">Courses (JSON)</label>
+              <input type="file" id="courseFile" accept=".json,application/json">
+              <div id="courseUploadStatus" class="upload-status"></div>
             </div>
             <div class="form-group">
-              <label for="roomFile"><i class="fas fa-door-open"></i> Rooms/Labs (JSON):</label>
-              <input type="file" id="roomFile" accept=".json">
-              <div class="upload-status" id="roomUploadStatus"></div>
-            </div>
-            <div class="step-navigation">
-              <button class="step-btn secondary" id="backToStep2"><i class="fas fa-arrow-left"></i> Back</button>
-              <button class="step-btn" id="nextToStep4">Next <i class="fas fa-arrow-right"></i></button>
+              <label for="roomFile">Rooms/labs (JSON)</label>
+              <input type="file" id="roomFile" accept=".json,application/json">
+              <div id="roomUploadStatus" class="upload-status"></div>
             </div>
           </div>
-        </div>
-        
-        <!-- Step 4 -->
-        <div class="step" id="step4" style="opacity: 0.7;">
-          <div class="step-header">
-            <div class="step-number">4</div>
-            <h3>Preferences & Settings</h3>
+          <div class="step-navigation">
+            <button id="backToStep2" class="btn secondary">Back</button>
+            <button id="nextToStep4" class="btn">Next</button>
           </div>
-          <div class="step-content">
+        </article>
+
+        <article class="step hidden" id="step4">
+          <div class="step-header"><div class="step-number">4</div><h3>Scheduling preferences</h3></div>
+          <div class="form-grid">
             <div class="form-group">
-              <label for="semester"><i class="fas fa-layer-group"></i> Semester:</label>
+              <label for="semester">Semester</label>
               <select id="semester">
-                <option value="1">Semester 1</option>
-                <option value="2">Semester 2</option>
-                <option value="3">Semester 3</option>
-                <option value="4">Semester 4</option>
-                <option value="5">Semester 5</option>
-                <option value="6">Semester 6</option>
-                <option value="7">Semester 7</option>
-                <option value="8">Semester 8</option>
+                <option value="1">Semester 1</option><option value="2">Semester 2</option>
+                <option value="3">Semester 3</option><option value="4">Semester 4</option>
+                <option value="5">Semester 5</option><option value="6">Semester 6</option>
+                <option value="7">Semester 7</option><option value="8">Semester 8</option>
               </select>
             </div>
             <div class="form-group">
-              <label for="program"><i class="fas fa-graduation-cap"></i> Program:</label>
-              <select id="program">
-                <option value="FYUP">Four Year Undergraduate Program (FYUP)</option>
-                <option value="B.Ed.">Bachelor of Education (B.Ed.)</option>
-                <option value="M.Ed.">Master of Education (M.Ed.)</option>
-                <option value="ITEP">Integrated Teacher Education Programme (ITEP)</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label><i class="fas fa-sliders-h"></i> Advanced Options:</label>
-              <div class="checkbox-group">
-                <input type="checkbox" id="avoidLunchBreakClasses" checked>
-                <label for="avoidLunchBreakClasses">Avoid lunch break classes</label>
-              </div>
-              <div class="checkbox-group">
-                <input type="checkbox" id="optimizeForFacultyPreference" checked>
-                <label for="optimizeForFacultyPreference">Optimize for faculty preferences</label>
-              </div>
-              <div class="checkbox-group">
-                <input type="checkbox" id="balanceClassLoad">
-                <label for="balanceClassLoad">Balance daily class load</label>
-              </div>
-            </div>
-            
-            <div class="form-group teaching-practice-section">
-              <label><i class="fas fa-chalkboard-teacher"></i> Teaching Practice Schedules (B.Ed./M.Ed./ITEP):</label>
-              <div class="teaching-practice-container">
-                <div class="teaching-practice-item">
-                  <div class="teaching-practice-header">
-                    <span>B.Ed. Teaching Practice</span>
-                    <div class="toggle-switch">
-                      <input type="checkbox" id="bedTeachingPractice">
-                      <label for="bedTeachingPractice"></label>
-                    </div>
-                  </div>
-                  <div class="teaching-practice-details" id="bedTeachingPracticeDetails">
-                    <div class="form-row">
-                      <div class="form-column">
-                        <label for="bedStartDate">Start Date:</label>
-                        <input type="date" id="bedStartDate">
-                      </div>
-                      <div class="form-column">
-                        <label for="bedEndDate">End Date:</label>
-                        <input type="date" id="bedEndDate">
-                      </div>
-                    </div>
-                    <div class="form-row">
-                      <div class="form-column">
-                        <label for="bedSchools">Assigned Schools:</label>
-                        <select id="bedSchools" multiple>
-                          <option value="school1">Delhi Public School</option>
-                          <option value="school2">Kendriya Vidyalaya</option>
-                          <option value="school3">St. Mary's School</option>
-                          <option value="school4">DAV Public School</option>
-                        </select>
-                      </div>
-                      <div class="form-column">
-                        <label for="bedSupervisors">Faculty Supervisors:</label>
-                        <select id="bedSupervisors" multiple>
-                          <option value="fac1">Dr. Sharma</option>
-                          <option value="fac2">Prof. Gupta</option>
-                          <option value="fac3">Dr. Kumar</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="teaching-practice-item">
-                  <div class="teaching-practice-header">
-                    <span>M.Ed. Teaching Practice</span>
-                    <div class="toggle-switch">
-                      <input type="checkbox" id="medTeachingPractice">
-                      <label for="medTeachingPractice"></label>
-                    </div>
-                  </div>
-                  <div class="teaching-practice-details" id="medTeachingPracticeDetails">
-                    <div class="form-row">
-                      <div class="form-column">
-                        <label for="medStartDate">Start Date:</label>
-                        <input type="date" id="medStartDate">
-                      </div>
-                      <div class="form-column">
-                        <label for="medEndDate">End Date:</label>
-                        <input type="date" id="medEndDate">
-                      </div>
-                    </div>
-                    <div class="form-row">
-                      <div class="form-column">
-                        <label for="medInstitutions">Assigned Institutions:</label>
-                        <select id="medInstitutions" multiple>
-                          <option value="inst1">B.Ed. College</option>
-                          <option value="inst2">University Education Dept</option>
-                          <option value="inst3">Teacher Training Institute</option>
-                        </select>
-                      </div>
-                      <div class="form-column">
-                        <label for="medSupervisors">Faculty Mentors:</label>
-                        <select id="medSupervisors" multiple>
-                          <option value="fac4">Prof. Singh</option>
-                          <option value="fac5">Dr. Verma</option>
-                          <option value="fac6">Prof. Joshi</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="teaching-practice-item">
-                  <div class="teaching-practice-header">
-                    <span>ITEP Internship</span>
-                    <div class="toggle-switch">
-                      <input type="checkbox" id="itepInternship">
-                      <label for="itepInternship"></label>
-                    </div>
-                  </div>
-                  <div class="teaching-practice-details" id="itepInternshipDetails">
-                    <div class="form-row">
-                      <div class="form-column">
-                        <label for="itepStartDate">Start Date:</label>
-                        <input type="date" id="itepStartDate">
-                      </div>
-                      <div class="form-column">
-                        <label for="itepEndDate">End Date:</label>
-                        <input type="date" id="itepEndDate">
-                      </div>
-                    </div>
-                    <div class="form-row">
-                      <div class="form-column">
-                        <label for="itepSchools">Assigned Schools:</label>
-                        <select id="itepSchools" multiple>
-                          <option value="school5">Modern School</option>
-                          <option value="school6">Springdales School</option>
-                          <option value="school7">Delhi International School</option>
-                        </select>
-                      </div>
-                      <div class="form-column">
-                        <label for="itepSupervisors">Faculty Supervisors:</label>
-                        <select id="itepSupervisors" multiple>
-                          <option value="fac7">Dr. Patel</option>
-                          <option value="fac8">Prof. Reddy</option>
-                          <option value="fac9">Dr. Iyer</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="step-navigation">
-              <button class="step-btn secondary" id="backToStep3"><i class="fas fa-arrow-left"></i> Back</button>
-              <button class="step-btn primary-btn" id="generateBtn">Generate Timetable <i class="fas fa-magic"></i></button>
+              <label for="program">Program</label>
+              <input id="program" value="General Undergraduate" maxlength="80">
             </div>
           </div>
-        </div>
+          <div class="form-group" style="margin-top:16px">
+            <div class="checkbox-row"><input type="checkbox" id="avoidLunchBreakClasses" checked><label for="avoidLunchBreakClasses">Reserve 13:00–14:00 for lunch</label></div>
+            <div class="checkbox-row"><input type="checkbox" id="optimizeForFacultyPreference" checked><label for="optimizeForFacultyPreference">Prefer faculty-selected days and times</label></div>
+            <div class="checkbox-row"><input type="checkbox" id="balanceClassLoad" checked><label for="balanceClassLoad">Balance daily class load</label></div>
+          </div>
+          <div class="step-navigation">
+            <button id="backToStep3" class="btn secondary">Back</button>
+            <button id="generateBtn" class="btn">Generate timetable</button>
+          </div>
+        </article>
       </section>
-      
-      <section class="results-section" id="resultsSection" style="display:none;">
-        <h2>Generated Timetable</h2>
-        
-        <div class="ai-status-container">
-          <div id="aiStatus" class="status-indicator status-processing">
-            <i class="fas fa-spinner fa-spin"></i> Preparing to generate timetable...
-          </div>
-        </div>
-        
-        <div class="algorithm-visualization-container">
-          <div class="visualization-header">
-            <h3><i class="fas fa-brain"></i> AI Algorithm Visualization</h3>
-            <p>Real-time visualization of the constraint satisfaction and optimization process</p>
-          </div>
+
+      <section id="resultsSection" class="results-section hidden" aria-live="polite">
+        <div id="statusMessage" class="status">Preparing timetable...</div>
+
+        <article class="card algorithm-panel">
+          <h2>Solver progress</h2>
+          <p>Heuristic search progress from the actual generation run.</p>
           <div id="algorithmVisualization" class="algorithm-canvas-container"></div>
-        </div>
-        
-        <div class="timetable-controls">
-          <div class="timetable-filters">
-            <select id="viewFilter">
-              <option value="all">View All Classes</option>
-              <option value="faculty">Filter by Faculty</option>
-              <option value="room">Filter by Room</option>
-              <option value="batch">Filter by Student Batch</option>
-            </select>
-            <select id="filterValue" disabled>
-              <option value="">Select Filter First</option>
-            </select>
-          </div>
-          <div class="timetable-actions">
-            <button id="exportPDF" class="action-btn"><i class="fas fa-file-pdf"></i> Export PDF</button>
-            <button id="exportExcel" class="action-btn"><i class="fas fa-file-excel"></i> Export Excel</button>
-            <button id="exportJSON" class="action-btn"><i class="fas fa-file-code"></i> Export JSON</button>
-            <button id="exportCSV" class="action-btn"><i class="fas fa-file-csv"></i> Export CSV</button>
-            <button id="printTimetable" class="action-btn"><i class="fas fa-print"></i> Print</button>
-          </div>
-        </div>
-        
-        <div class="timetable-container">
-          <table id="timetable">
-            <thead>
-              <tr>
-                <th>Time</th>
-                <th>Monday</th>
-                <th>Tuesday</th>
-                <th>Wednesday</th>
-                <th>Thursday</th>
-                <th>Friday</th>
-                <th>Saturday</th>
-              </tr>
-            </thead>
-            <tbody>
-              <!-- Timetable rows will be generated by JS -->
-            </tbody>
-          </table>
-        </div>
-        
-        <div class="timetable-stats">
-          <div class="stat-card">
-            <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
-            <div class="stat-content">
-              <div class="stat-value">100%</div>
-              <div class="stat-label">Conflict-Free</div>
+        </article>
+
+        <article class="card">
+          <div class="controls">
+            <div class="filters">
+              <div class="form-group">
+                <label for="viewFilter">Filter</label>
+                <select id="viewFilter">
+                  <option value="all">All classes</option>
+                  <option value="faculty">Faculty</option>
+                  <option value="room">Room</option>
+                  <option value="batch">Batch</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="filterValue">Value</label>
+                <select id="filterValue" disabled><option value="">All</option></select>
+              </div>
+            </div>
+            <div class="actions no-print">
+              <button id="exportPDF" class="btn secondary">Print / PDF</button>
+              <button id="exportExcel" class="btn secondary">Export Excel</button>
+              <button id="exportJSON" class="btn secondary">Export JSON</button>
+              <button id="exportCSV" class="btn secondary">Export CSV</button>
+              <button id="printTimetable" class="btn">Print</button>
             </div>
           </div>
-          <div class="stat-card">
-            <div class="stat-icon"><i class="fas fa-balance-scale"></i></div>
-            <div class="stat-content">
-              <div class="stat-value">94%</div>
-              <div class="stat-label">Faculty Satisfaction</div>
-            </div>
+
+          <div class="timetable-wrap">
+            <table id="timetable">
+              <thead><tr><th>Time</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th><th>Saturday</th></tr></thead>
+              <tbody></tbody>
+            </table>
           </div>
-          <div class="stat-card">
-            <div class="stat-icon"><i class="fas fa-clock"></i></div>
-            <div class="stat-content">
-              <div class="stat-value">87%</div>
-              <div class="stat-label">Resource Utilization</div>
-            </div>
+
+          <div class="metrics">
+            <div class="metric"><div id="conflictFreeMetric" class="metric-value">—</div><div class="metric-label">Hard constraints satisfied</div></div>
+            <div class="metric"><div id="facultyMetric" class="metric-value">—</div><div class="metric-label">Faculty preference score</div></div>
+            <div class="metric"><div id="roomMetric" class="metric-value">—</div><div class="metric-label">Room assignment rate</div></div>
+            <div class="metric"><div id="scheduledMetric" class="metric-value">—</div><div class="metric-label">Sessions scheduled</div></div>
           </div>
-        </div>
-        
-        <div class="constraint-details">
-          <h3>Constraint Satisfaction Details</h3>
+        </article>
+
+        <article class="card">
+          <h2>Constraint summary</h2>
           <div class="constraint-grid">
-            <div class="constraint-item">
-              <div class="constraint-header">
-                <i class="fas fa-user-tie"></i> Faculty Constraints
-              </div>
-              <div class="constraint-progress">
-                <div class="progress-bar">
-                  <div class="progress-fill" style="width: 96%"></div>
-                </div>
-                <div class="progress-value">96%</div>
-              </div>
-              <ul class="constraint-list">
-                <li>No faculty teaches more than 1 class at a time</li>
-                <li>Faculty preferences for time slots respected</li>
-                <li>Balanced teaching load across the week</li>
-              </ul>
-            </div>
-            
-            <div class="constraint-item">
-              <div class="constraint-header">
-                <i class="fas fa-users"></i> Student Constraints
-              </div>
-              <div class="constraint-progress">
-                <div class="progress-bar">
-                  <div class="progress-fill" style="width: 98%"></div>
-                </div>
-                <div class="progress-value">98%</div>
-              </div>
-              <ul class="constraint-list">
-                <li>No overlapping courses for any student</li>
-                <li>Balanced daily course load</li>
-                <li>Appropriate breaks between classes</li>
-              </ul>
-            </div>
-            
-            <div class="constraint-item">
-              <div class="constraint-header">
-                <i class="fas fa-door-open"></i> Room Constraints
-              </div>
-              <div class="constraint-progress">
-                <div class="progress-bar">
-                  <div class="progress-fill" style="width: 99%"></div>
-                </div>
-                <div class="progress-value">99%</div>
-              </div>
-              <ul class="constraint-list">
-                <li>No double-booking of rooms</li>
-                <li>Appropriate room capacity for class size</li>
-                <li>Special equipment requirements satisfied</li>
-              </ul>
-            </div>
-            
-            <div class="constraint-item">
-              <div class="constraint-header">
-                <i class="fas fa-clock"></i> Time Constraints
-              </div>
-              <div class="constraint-progress">
-                <div class="progress-bar">
-                  <div class="progress-fill" style="width: 97%"></div>
-                </div>
-                <div class="progress-value">97%</div>
-              </div>
-              <ul class="constraint-list">
-                <li>No classes during lunch hours</li>
-                <li>Appropriate distribution across the week</li>
-                <li>Consecutive related courses when beneficial</li>
-              </ul>
-            </div>
+            <div class="constraint"><h4>Faculty</h4><div class="progress"><div id="facultyProgress" class="progress-bar"></div></div><p id="facultyConstraint">—</p></div>
+            <div class="constraint"><h4>Students</h4><div class="progress"><div id="studentProgress" class="progress-bar"></div></div><p id="studentConstraint">—</p></div>
+            <div class="constraint"><h4>Rooms</h4><div class="progress"><div id="roomProgress" class="progress-bar"></div></div><p id="roomConstraint">—</p></div>
+            <div class="constraint"><h4>Time</h4><div class="progress"><div id="timeProgress" class="progress-bar"></div></div><p id="timeConstraint">—</p></div>
           </div>
-        </div>
-        
-        <button id="regenerateBtn" class="primary-btn"><i class="fas fa-sync-alt"></i> Regenerate with New Parameters</button>
+        </article>
+
+        <div class="step-navigation no-print"><button id="regenerateBtn" class="btn">Regenerate</button></div>
       </section>
     </main>
-    
-    <footer>
-      <p>&copy; 2025 AI Timetable Generator | Smart India Hackathon 2025</p>
-    </footer>
+
+    <footer>TimeGen · local browser application</footer>
   </div>
-  
-  <script src="script.js"></script>
+
+  <script src="algorithm-visualization.js" defer></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
