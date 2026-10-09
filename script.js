@@ -133,8 +133,25 @@
     return slot[0] + ' - ' + slot[1];
   }
 
+  function canonicalTime(value) {
+    const match = String(value).trim().match(/^(\d{1,2}):(\d{2})(?:\s*(AM|PM))?$/i);
+    if (!match) return String(value).trim();
+    let hour = Number(match[1]);
+    const minute = Number(match[2]);
+    const meridiem = match[3]?.toUpperCase();
+    if (meridiem === 'PM' && hour < 12) hour += 12;
+    if (meridiem === 'AM' && hour === 12) hour = 0;
+    if (!meridiem && hour >= 1 && hour <= 5) hour += 12;
+    return String(hour).padStart(2, '0') + ':' + String(minute).padStart(2, '0');
+  }
+
+  function canonicalRange(value) {
+    const match = String(value).match(/(\d{1,2}:\d{2}(?:\s*(?:AM|PM))?)\s*[-–]\s*(\d{1,2}:\d{2}(?:\s*(?:AM|PM))?)/i);
+    return match ? [canonicalTime(match[1]), canonicalTime(match[2])] : null;
+  }
+
   function minutes(value) {
-    const [h, m] = value.split(':').map(Number);
+    const [h, m] = canonicalTime(value).split(':').map(Number);
     return h * 60 + m;
   }
 
