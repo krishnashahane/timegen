@@ -1,0 +1,9 @@
+{
+  "rooms": [
+    {"id":"LH-104","name":"LH-104","capacity":40,"type":"lecture"},
+    {"id":"LH-106","name":"LH-106","capacity":40,"type":"lecture"},
+    {"id":"Lab-201","name":"Lab-201","capacity":30,"type":"lab"},
+    {"id":"Lab-202","name":"Lab-202","capacity":30,"type":"lab"},
+    {"id":"Lab-203","name":"Lab-203","capacity":30,"type":"lab"}
+  ]
+}
