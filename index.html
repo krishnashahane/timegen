@@ -17,9 +17,10 @@
     <main>
       <section id="landingSection" class="card">
         <h2>Generate a timetable</h2>
-        <p>Upload the four JSON datasets, choose the scheduling preferences, and generate a timetable locally. No data is uploaded to a server.</p>
+        <p>Upload the four JSON datasets, or load the bundled sample dataset. Scheduling runs entirely in your browser; no data is uploaded.</p>
         <div class="step-navigation">
           <button id="startBtn" class="btn">Start</button>
+          <button id="sampleBtn" class="btn secondary">Use sample data</button>
         </div>
       </section>
 
@@ -124,7 +125,7 @@
             </div>
             <div class="actions no-print">
               <button id="exportPDF" class="btn secondary">Print / PDF</button>
-              <button id="exportExcel" class="btn secondary">Export Excel</button>
+              <button id="exportExcel" class="btn secondary">Excel-compatible export</button>
               <button id="exportJSON" class="btn secondary">Export JSON</button>
               <button id="exportCSV" class="btn secondary">Export CSV</button>
               <button id="printTimetable" class="btn">Print</button>
