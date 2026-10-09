@@ -104,7 +104,7 @@
       id: String(r.id ?? r.name ?? 'room-' + (i + 1)),
       name: String(r.name ?? r.id ?? 'Room ' + (i + 1)),
       capacity: Math.max(1, Number(r.capacity ?? 9999) || 9999),
-      type: String(r.type ?? (r.name ?? '').toLowerCase().includes('lab') ? 'lab' : 'lecture')
+      type: String(r.type ?? ((r.name ?? '').toLowerCase().includes('lab') ? 'lab' : 'lecture'))
     }));
     return { students: cleanStudents, faculty: cleanFaculty, courses: cleanCourses, rooms: cleanRooms };
   }
@@ -165,7 +165,6 @@
   }
 
   function scheduleTimetable(data, preferences) {
-    const courseById = new Map(data.courses.map((c) => [c.id, c]));
     const studentsByCourse = new Map(data.courses.map((c) => [c.id, enrolledStudents(c.id, data.students)]));
     const offerings = data.courses
       .filter((course) => {
@@ -193,12 +192,6 @@
       const bDifficulty = b.attendees.length * 2 + (b.course.requiresLab ? 3 : 0) + (b.faculty ? 0 : 5);
       return bDifficulty - aDifficulty;
     });
-
-    const isBusy = (map, key) => map.get(key)?.has ?? false;
-    const mark = (map, key) => {
-      if (!map.has(key)) map.set(key, new Set());
-      map.get(key).add(key);
-    };
 
     for (const offering of hardOrder) {
       const usedDays = new Set();
