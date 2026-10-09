@@ -1,0 +1,10 @@
+{
+  "students": [
+    {"id":"S001","name":"Aarav","batch":"CSE-A","courses":["CS301","CS302","CS303","IT301","SKILL101"]},
+    {"id":"S002","name":"Diya","batch":"CSE-A","courses":["CS301","CS302","CS303","IT301","SKILL101"]},
+    {"id":"S003","name":"Vihaan","batch":"CSE-A","courses":["CS301","CS302","CS303","IT301","SKILL101"]},
+    {"id":"S004","name":"Anaya","batch":"CSE-B","courses":["CS301","CS304","CS401","IT302","MINOR201"]},
+    {"id":"S005","name":"Kabir","batch":"CSE-B","courses":["CS301","CS304","CS401","IT302","MINOR201"]},
+    {"id":"S006","name":"Sara","batch":"CSE-B","courses":["CS301","CS304","CS401","IT302","MINOR201"]}
+  ]
+}
