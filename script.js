@@ -91,7 +91,15 @@
       id: String(f.id ?? 'faculty-' + (i + 1)),
       name: String(f.name ?? 'Faculty ' + (i + 1)),
       courses: Array.isArray(f.courses) ? f.courses.map(String) : [],
-      preferences: f.preferences && typeof f.preferences === 'object' ? f.preferences : {},
+      preferences: f.preferences && typeof f.preferences === 'object' ? {
+        ...f.preferences,
+        preferred_time_slots: Array.isArray(f.preferences.preferred_time_slots)
+          ? f.preferences.preferred_time_slots.map((slot) => {
+              const range = canonicalRange(slot);
+              return range ? range[0] + ' - ' + range[1] : String(slot);
+            })
+          : []
+      } : {},
       unavailability: Array.isArray(f.unavailability) ? f.unavailability : []
     }));
     const cleanCourses = courses.map((c, i) => ({
@@ -137,10 +145,9 @@
   function facultyUnavailable(faculty, day, slot) {
     return faculty.unavailability.some((item) => {
       if (String(item.day) !== day) return false;
-      const text = String(item.time ?? '');
-      const match = text.match(/(\d{1,2}:\d{2})\s*[-–]\s*(\d{1,2}:\d{2})/);
-      if (!match) return false;
-      return overlaps(slot[0], slot[1], match[1].padStart(5, '0'), match[2].padStart(5, '0'));
+      const range = canonicalRange(item.time ?? '');
+      if (!range) return false;
+      return overlaps(slot[0], slot[1], range[0], range[1]);
     });
   }
 
@@ -166,7 +173,7 @@
   }
 
   function scheduleTimetable(data, preferences) {
-    const studentsByCourse = new Map(data.courses.map((c) => [c.id, enrolledStudents(c.id, data.students)]));
+    const studentsByCourse = new Map(data.courses.map((course) => [course.id, enrolledStudents(course.id, data.students)]));
     const offerings = data.courses
       .filter((course) => {
         const count = studentsByCourse.get(course.id)?.length ?? 0;
