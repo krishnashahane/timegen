@@ -1,84 +1,191 @@
-# TimeGen AI
+# TimeGen
 
-## Overview
+A browser-based academic timetable generator that runs entirely on the client.
 
-The AI Timetable Generator is an intelligent scheduling system designed to create optimal academic timetables while satisfying multiple constraints. This project addresses the complex challenge of academic scheduling by leveraging artificial intelligence to generate conflict-free timetables that respect faculty preferences, student needs, and resource constraints.
+TimeGen accepts student, faculty, course, and room JSON data, then builds a schedule with hard conflict checks and soft preference scoring. It is designed as a lightweight, dependency-free project that can be opened directly from the repository.
 
-## Key Features
+## Features
 
-- **NEP 2020 Compliant**: Designed to support the flexibility and multidisciplinary approach of the National Education Policy 2020.
-- **Constraint-Based Optimization**: Uses advanced algorithms to satisfy multiple constraints simultaneously.
-- **Intuitive User Interface**: Step-by-step workflow with visual feedback and real-time algorithm visualization.
-- **Multi-Level Filtering**: View timetables by faculty, room, or student batch.
-- **Exportable Results**: Export generated timetables to PDF, Excel, or print directly.
-- **Real-time Algorithm Visualization**: Watch the AI optimization process in action.
-- **Detailed Analytics**: Comprehensive statistics on constraint satisfaction and resource utilization.
+- Constraint-aware timetable generation in the browser
+- Student/course overlap avoidance
+- Faculty double-booking prevention
+- Faculty unavailability handling
+- Room capacity and lab requirements
+- Faculty day/time preference scoring
+- Optional daily-load balancing
+- Filters by faculty, room, or batch
+- Live solver-progress visualization
+- JSON, CSV, and Excel-compatible XML exports
+- Print / browser PDF workflow
+- Bundled sample data
+- No backend and no third-party runtime dependencies
 
-## Technology Stack
+## Run it
 
-- **Frontend**: HTML5, CSS3, JavaScript (Vanilla)
-- **Visualization**: Canvas API for algorithm visualization
-- **Data Format**: JSON for data exchange
-- **Algorithm**: Custom constraint satisfaction solver with simulated annealing
+No build step is required.
 
-## Getting Started
+Open `index.html` in a modern browser, then choose **Use sample data** for an immediate demonstration.
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/yourusername/ai-timetable-generator.git
-   ```
+For a local web server, either use any static-file server or run:
 
-2. Open `index.html` in your browser.
+```bash
+python3 -m http.server 8000
+```
 
-3. Upload the required JSON files:
-   - `students.json`: Student data and course selections
-   - `faculty.json`: Faculty information and preferences
-   - `courses.json`: Course details and requirements
-   - `rooms.json`: Room information and availability
+Then open:
 
-4. Set your preferences and generate the timetable.
+```text
+http://127.0.0.1:8000/
+```
 
-## Input Data Format
+## Using your own data
 
-The system requires four JSON files with specific formats:
+The application accepts four JSON datasets. You can use the included `students.json`, `faculty.json`, `courses.json`, and `rooms.json` as a starting point.
 
 ### students.json
-Contains student information, batch assignments, and course selections.
+
+```json
+{
+  "students": [
+    {
+      "id": "S001",
+      "name": "Student Name",
+      "batch": "CSE-A",
+      "courses": ["CS301", "CS302"]
+    }
+  ]
+}
+```
+
+Each student's `courses` array contains course IDs.
 
 ### faculty.json
-Contains faculty information, course assignments, and scheduling preferences.
+
+```json
+{
+  "faculty": [
+    {
+      "id": "FAC001",
+      "name": "Faculty Name",
+      "courses": ["CS301"],
+      "preferences": {
+        "preferred_days": ["Monday", "Tuesday"],
+        "preferred_time_slots": ["09:00 - 10:00"],
+        "max_classes_per_day": 3
+      },
+      "unavailability": [
+        {
+          "day": "Thursday",
+          "time": "02:00 - 05:00",
+          "reason": "Meeting"
+        }
+      ]
+    }
+  ]
+}
+```
+
+Time values are normalized by the application. In the included academic fixture, `02:00 - 05:00` is interpreted as afternoon time.
 
 ### courses.json
-Contains course details, credit information, and room requirements.
+
+```json
+{
+  "courses": [
+    {
+      "id": "CS301",
+      "name": "Data Structures",
+      "hours_per_week": 4,
+      "requires_lab": true,
+      "preferred_rooms": ["Lab-201"]
+    }
+  ]
+}
+```
+
+`hours_per_week` controls how many one-hour sessions are requested.
 
 ### rooms.json
-Contains room information, capacity, and available facilities.
 
-## Constraints Handled
+```json
+{
+  "rooms": [
+    {
+      "id": "Lab-201",
+      "name": "Lab-201",
+      "capacity": 30,
+      "type": "lab"
+    }
+  ]
+}
+```
 
-- No faculty teaches more than one class at a time
-- No student has overlapping courses
-- No room is double-booked
-- Faculty preferences for teaching times are respected
-- Appropriate rooms are assigned based on course requirements
-- Lunch breaks are preserved
-- Daily class load is balanced
+Courses marked with `requires_lab: true` are only placed into rooms whose type contains `lab`.
 
-## Future Enhancements
+## Scheduling model
 
-- Integration with university ERP systems
-- Mobile application for on-the-go access
-- Machine learning to improve scheduling based on historical data
-- Support for special events and academic calendar integration
+TimeGen uses a deterministic greedy heuristic with preference scoring rather than a machine-learning model.
 
-## Team
+Hard constraints are checked first:
 
-- [Team Member 1] - Role
-- [Team Member 2] - Role
-- [Team Member 3] - Role
-- [Team Member 4] - Role
-- [Team Member 5] - Role
+1. A faculty member cannot teach two sessions at the same time.
+2. A student cannot attend two courses at the same time.
+3. A room cannot host two sessions at the same time.
+4. A faculty member's unavailable periods are respected.
+5. Room capacity and lab requirements must be satisfied.
+
+Then the scheduler scores feasible slots using soft preferences such as preferred faculty days/times, preferred rooms, spreading a course across days, and optional daily-load balancing.
+
+Because it is a heuristic, difficult or over-constrained datasets may contain unscheduled sessions. The interface reports those sessions instead of claiming a perfect schedule.
+
+## Filters and exports
+
+After generation, the timetable can be filtered by:
+
+- Faculty
+- Room
+- Student batch
+
+Available exports:
+
+- **JSON** — complete schedule plus generation metadata
+- **CSV** — tabular session data
+- **Excel-compatible XML** — opens in spreadsheet applications
+- **Print / PDF** — uses the browser print dialog
+
+## Security and privacy
+
+The application is local-first:
+
+- Input files are read in the browser and are not uploaded by TimeGen.
+- No remote API is required.
+- User-supplied names and other values are inserted with DOM text APIs rather than HTML interpolation.
+- Input files are limited to 2 MiB each.
+- Large datasets are bounded to prevent unreasonably large in-memory inputs.
+
+For sensitive institutional data, use the application on a trusted device and avoid publishing the input JSON files publicly.
+
+## Repository structure
+
+```text
+timegen/
+├── index.html
+├── style.css
+├── script.js
+├── algorithm-visualization.js
+├── students.json
+├── faculty.json
+├── courses.json
+├── rooms.json
+└── LICENSE
+```
+
+## Notes
+
+This project intentionally has no build system or package manager requirements. It is a static browser application.
+
+The repository previously contained a larger set of claims that were not backed by committed source files. The current README documents only functionality that is actually present in the repository.
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+MIT License. See [LICENSE](LICENSE).
